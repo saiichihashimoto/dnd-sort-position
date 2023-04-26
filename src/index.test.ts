@@ -1,113 +1,113 @@
-import defaultValue, { getNPositions, getPositionBetween } from ".";
+import defaultValue, { getNPositions, positionBetween } from ".";
 
 describe("default", () => {
   it("same as named export", () =>
     expect(defaultValue)
       // eslint-disable-next-line jest/prefer-strict-equal -- Specifically want equality by reference
-      .toEqual(getPositionBetween));
+      .toEqual(positionBetween));
 });
 
 describe("getPositionBetween", () => {
   it("returns a string between", () =>
-    expect(getPositionBetween("b", "d")).toBe("c"));
+    expect(positionBetween("b", "d")).toBe("c"));
 
   it("returns character directly between", () =>
-    expect(getPositionBetween("b", "f")).toBe("d"));
+    expect(positionBetween("b", "f")).toBe("d"));
 
   it("allows a number interpolationFactor", () =>
-    expect(getPositionBetween("b", "f", 0.2)).toBe("c"));
+    expect(positionBetween("b", "f", 0.2)).toBe("c"));
 
   it("allows a function interpolationFactor", () =>
-    expect(getPositionBetween("b", "f", () => 0.2)).toBe("c"));
+    expect(positionBetween("b", "f", () => 0.2)).toBe("c"));
 
   it("allows that function to be `Math.random`", () =>
-    expect(getPositionBetween("b", "d", Math.random)).toBe("c"));
+    expect(positionBetween("b", "d", Math.random)).toBe("c"));
 
   it("allows returning leftmost character", () =>
-    expect(getPositionBetween("b", "f", () => 0)).toBe("c"));
+    expect(positionBetween("b", "f", () => 0)).toBe("c"));
 
   it("allows returning rightmost character", () =>
-    expect(getPositionBetween("b", "f", () => 1)).toBe("e"));
+    expect(positionBetween("b", "f", () => 1)).toBe("e"));
 
   it("allows returning character matching second param when it's still between", () =>
-    expect(getPositionBetween("b", "fb", () => 1)).toBe("f"));
+    expect(positionBetween("b", "fb", () => 1)).toBe("f"));
 
   it("returns rightmost character when factor is close to 1, otherwise Math.random doesn't work", () =>
-    expect(getPositionBetween("b", "f", () => 0.9999)).toBe("e"));
+    expect(positionBetween("b", "f", () => 0.9999)).toBe("e"));
 
   it("throws if first param is greater", () =>
-    expect(() => getPositionBetween("d", "b")).toThrow("Invalid Arguments"));
+    expect(() => positionBetween("d", "b")).toThrow("Invalid Arguments"));
 
   it("throws if strings are equal", () =>
-    expect(() => getPositionBetween("b", "b")).toThrow("Invalid Arguments"));
+    expect(() => positionBetween("b", "b")).toThrow("Invalid Arguments"));
 
   it("throws if first param has illegal character", () =>
-    expect(() => getPositionBetween("A", "b")).toThrow("Invalid Arguments"));
+    expect(() => positionBetween("A", "b")).toThrow("Invalid Arguments"));
 
   it("throws if second param has illegal character", () =>
-    expect(() => getPositionBetween("b", "{")).toThrow("Invalid Arguments"));
+    expect(() => positionBetween("b", "{")).toThrow("Invalid Arguments"));
 
   it("allows an undefined first param", () =>
-    expect(getPositionBetween(undefined, "c")).toBe("b"));
+    expect(positionBetween(undefined, "c")).toBe("b"));
 
   it("allows an undefined second param", () =>
-    expect(getPositionBetween("y", undefined)).toBe("z"));
+    expect(positionBetween("y", undefined)).toBe("z"));
 
   it("allows both param undefined", () =>
-    expect(getPositionBetween(undefined, undefined)).toBe("n"));
+    expect(positionBetween(undefined, undefined)).toBe("n"));
 
   it("returns a shorter string when possible", () =>
-    expect(getPositionBetween("aab", "cab")).toBe("b"));
+    expect(positionBetween("aab", "cab")).toBe("b"));
 
   it('won\'t return a string ending in "a"', () =>
-    expect(getPositionBetween(undefined, "b")).toBe("an"));
+    expect(positionBetween(undefined, "b")).toBe("an"));
 
   it("adds digits after z", () =>
-    expect(getPositionBetween("z", undefined)).toBe("zn"));
+    expect(positionBetween("z", undefined)).toBe("zn"));
 
   it("keeps equivalent digits", () =>
-    expect(getPositionBetween("aab", "acb")).toBe("ab"));
+    expect(positionBetween("aab", "acb")).toBe("ab"));
 
   it("uses leading digits of first parameter", () =>
-    expect(getPositionBetween("ab", "b")).toBe("an"));
+    expect(positionBetween("ab", "b")).toBe("an"));
 
   it("uses leading digits of second parameter if shorter", () =>
-    expect(getPositionBetween("az", "bc")).toBe("b"));
+    expect(positionBetween("az", "bc")).toBe("b"));
 
   it("handles start being longer than end", () =>
-    expect(getPositionBetween("zzzz")).toBe("zzzzn"));
+    expect(positionBetween("zzzz")).toBe("zzzzn"));
 
   it("handles end being longer than start", () =>
-    expect(getPositionBetween(undefined, "aaab")).toBe("aaaan"));
+    expect(positionBetween(undefined, "aaab")).toBe("aaaan"));
 
   it("avoids blocked as array", () =>
     expect(
-      getPositionBetween("pottx", "pottz", undefined, { blocked: ["potty"] })
+      positionBetween("pottx", "pottz", undefined, { blocked: ["potty"] })
     ).toBe("pottxn"));
 
   it("avoids blocked as object", () =>
     expect(
-      getPositionBetween("pottx", "pottz", undefined, { blocked: { potty: 1 } })
+      positionBetween("pottx", "pottz", undefined, { blocked: { potty: 1 } })
     ).toBe("pottxn"));
 
   it("avoids blocked as function", () =>
     expect(
-      getPositionBetween("pottx", "pottz", undefined, {
+      positionBetween("pottx", "pottz", undefined, {
         blocked: (value) => value === "potty",
       })
     ).toBe("pottxn"));
 
   it("avoids blocked as regexp", () =>
     expect(
-      getPositionBetween("pottx", "pottz", undefined, { blocked: /potty/ })
+      positionBetween("pottx", "pottz", undefined, { blocked: /potty/ })
     ).toBe("pottxn"));
 
   it("defaults blocked to `badwords`", () =>
-    expect(getPositionBetween("asr", "ast")).toBe("asrn"));
+    expect(positionBetween("asr", "ast")).toBe("asrn"));
 
   it("avoids blocked when called recursively", () =>
     expect(
-      getPositionBetween("test", "tesu", undefined, { blocked: ["testn"] })
+      positionBetween("test", "tesu", undefined, { blocked: ["testn"] })
     ).toBe("testm"));
 });
 
