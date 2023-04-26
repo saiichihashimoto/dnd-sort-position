@@ -27,26 +27,25 @@ export const positionBetween = (
     throw new Error("Invalid Arguments");
   }
 
+  const isBlocked =
+    typeof blocked === "function"
+      ? blocked
+      : blocked instanceof RegExp
+      ? blocked.test.bind(blocked)
+      : Array.isArray(blocked)
+      ? (() => {
+          const blockedSet = new Set(blocked);
+
+          return blockedSet.has.bind(blockedSet);
+        })()
+      : (value: string) => Boolean(blocked[value]);
+
   const indexOfDiff = [...start].findIndex(
     (value, index) => value !== end.charAt(index)
   );
 
   const startCharCodePoint = start.codePointAt(indexOfDiff)!;
   const endCharCodePoint = end.codePointAt(indexOfDiff)!;
-  const isBlocked =
-    typeof blocked === "function"
-      ? blocked
-      : blocked instanceof RegExp
-      ? (value: string) => blocked.test(value)
-      : Array.isArray(blocked)
-      ? (() => {
-          const blockedObj = Object.fromEntries(
-            blocked.map((value) => [value, true] as const)
-          );
-
-          return (value: string) => Boolean(blockedObj[value]);
-        })()
-      : (value: string) => Boolean(blocked[value]);
 
   const possibleSimpleValues = Array.from(
     {
