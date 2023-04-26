@@ -2,7 +2,7 @@ import badwords from "badwords/object";
 
 const afterZ = String.fromCodePoint("z".codePointAt(0)! + 1);
 
-export const getPositionBetween = (
+export const positionBetween = (
   startRaw = "",
   endRaw = "",
   interpolationFactor: number | (() => number) = 0.5,
@@ -27,26 +27,25 @@ export const getPositionBetween = (
     throw new Error("Invalid Arguments");
   }
 
+  const isBlocked =
+    typeof blocked === "function"
+      ? blocked
+      : blocked instanceof RegExp
+      ? blocked.test.bind(blocked)
+      : Array.isArray(blocked)
+      ? (() => {
+          const blockedSet = new Set(blocked);
+
+          return blockedSet.has.bind(blockedSet);
+        })()
+      : (value: string) => Boolean(blocked[value]);
+
   const indexOfDiff = [...start].findIndex(
     (value, index) => value !== end.charAt(index)
   );
 
   const startCharCodePoint = start.codePointAt(indexOfDiff)!;
   const endCharCodePoint = end.codePointAt(indexOfDiff)!;
-  const isBlocked =
-    typeof blocked === "function"
-      ? blocked
-      : blocked instanceof RegExp
-      ? (value: string) => blocked.test(value)
-      : Array.isArray(blocked)
-      ? (() => {
-          const blockedObj = Object.fromEntries(
-            blocked.map((value) => [value, true] as const)
-          );
-
-          return (value: string) => Boolean(blockedObj[value]);
-        })()
-      : (value: string) => Boolean(blocked[value]);
 
   const possibleSimpleValues = Array.from(
     {
@@ -66,7 +65,7 @@ export const getPositionBetween = (
     possibleSimpleValues.length > 0
       ? possibleSimpleValues
       : [
-          getPositionBetween(
+          positionBetween(
             start.slice(indexOfDiff + 1),
             undefined,
             interpolationFactor,
@@ -79,7 +78,7 @@ export const getPositionBetween = (
           ...(end.length === indexOfDiff + 1
             ? []
             : [
-                getPositionBetween(
+                positionBetween(
                   undefined,
                   end.slice(indexOfDiff + 1),
                   interpolationFactor,
@@ -119,7 +118,7 @@ export const getPositionBetween = (
       ]!;
 };
 
-export default getPositionBetween;
+export default positionBetween;
 
 export const getNPositions = (count: number, start = "", end = ""): string[] =>
   Array.from<string>({ length: Math.min(26, count) }).reduce<string[]>(
@@ -128,7 +127,7 @@ export const getNPositions = (count: number, start = "", end = ""): string[] =>
 
       const next =
         index < 25
-          ? getPositionBetween(prev, end, 1 / (Math.min(25, count) - index + 1))
+          ? positionBetween(prev, end, 1 / (Math.min(25, count) - index + 1))
           : undefined;
 
       return [
