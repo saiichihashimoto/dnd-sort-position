@@ -1,6 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "dnd-sort-position",
+  "description": "Get and maintain sort positions for manually sorted lists",
+  "homepage": "https://github.com/saiichihashimoto/dnd-sort-position#readme",
+  "repository": "saiichihashimoto/dnd-sort-position",
   "scripts": {
     "build": "tsup",
     "dev": "concurrently --prefix-colors \"auto\" npm:dev:*",
