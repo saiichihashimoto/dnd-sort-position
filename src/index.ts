@@ -1,22 +1,40 @@
-import badwords from "badwords/object";
-
 const afterZ = String.fromCodePoint("z".codePointAt(0)! + 1);
 
+/** Get and maintain sort positions for manually sorted lists. */
 export const positionBetween = (
+  /** The position before the return value, exclusive. */
   startRaw = "",
+  /** The position after the return value, exclusive. */
   endRaw = "",
+  /** A value 0-1 determining what value to return. */
   interpolationFactor: number | (() => number) = 0.5,
   {
-    blocked = badwords,
+    blocked,
     inclusiveOfOne = typeof interpolationFactor === "number",
     prefix = "",
   }: {
+    /**
+     * Avoid inappropriate values from being generated. `badwords[-list]` is a great candidate.
+     *
+     * @link https://www.npmjs.com/package/badwords
+     * @link https://www.npmjs.com/package/badwords-list
+     */
     blocked?:
       | RegExp
       | string[]
       | ((value: string) => boolean)
-      | { [key: string]: unknown };
+      | { [key: string]: unknown }
+      | undefined;
+    /**
+     * Whether the `interpolationFactor` is inclusive or exclusive of one.
+     *
+     * @default typeof interpolationFactor === "number" (This lets both `1` and `Math.random` do what you would expect)
+     */
     inclusiveOfOne?: boolean;
+    /**
+     * An included prefix for the returned value.
+     * Mainly used for recursion, so recursive values can avoid blocked values.
+     */
     prefix?: string;
   } = {}
 ): string => {
@@ -27,18 +45,19 @@ export const positionBetween = (
     throw new Error("Invalid Arguments");
   }
 
-  const isBlocked =
-    typeof blocked === "function"
-      ? blocked
-      : blocked instanceof RegExp
-      ? blocked.test.bind(blocked)
-      : Array.isArray(blocked)
-      ? (() => {
-          const blockedSet = new Set(blocked);
+  const isBlocked = !blocked
+    ? () => false
+    : typeof blocked === "function"
+    ? blocked
+    : blocked instanceof RegExp
+    ? blocked.test.bind(blocked)
+    : Array.isArray(blocked)
+    ? (() => {
+        const blockedSet = new Set(blocked);
 
-          return blockedSet.has.bind(blockedSet);
-        })()
-      : (value: string) => Boolean(blocked[value]);
+        return blockedSet.has.bind(blockedSet);
+      })()
+    : (value: string) => Boolean(blocked[value]);
 
   const indexOfDiff = [...start].findIndex(
     (value, index) => value !== end.charAt(index)
@@ -120,14 +139,40 @@ export const positionBetween = (
 
 export default positionBetween;
 
-export const getNPositions = (count: number, start = "", end = ""): string[] =>
+/** Get N string position between two other positions. Useful for adding positions to lists that don't have them yet. */
+export const getNPositions = (
+  /** The number of values to return. */
+  count: number,
+  /** The position before the return values, exclusive. */
+  start = "",
+  /** The position after the return values, exclusive. */
+  end = "",
+  {
+    blocked,
+  }: {
+    /**
+     * Avoid inappropriate values from being generated. `badwords[-list]` is a great candidate.
+     *
+     * @link https://www.npmjs.com/package/badwords
+     * @link https://www.npmjs.com/package/badwords-list
+     */
+    blocked?:
+      | RegExp
+      | string[]
+      | ((value: string) => boolean)
+      | { [key: string]: unknown }
+      | undefined;
+  } = {}
+): string[] =>
   Array.from<string>({ length: Math.min(26, count) }).reduce<string[]>(
     (arr, value, index) => {
       const prev = arr.at(-1) ?? start;
 
       const next =
         index < 25
-          ? positionBetween(prev, end, 1 / (Math.min(25, count) - index + 1))
+          ? positionBetween(prev, end, 1 / (Math.min(25, count) - index + 1), {
+              blocked,
+            })
           : undefined;
 
       return [
@@ -138,7 +183,8 @@ export const getNPositions = (count: number, start = "", end = ""): string[] =>
               Math.floor((count - 25) / 26) +
                 (index < (count - 25) % 26 ? 1 : 0),
               prev,
-              next
+              next,
+              { blocked }
             )),
         ...(next === undefined ? [] : [next]),
       ];

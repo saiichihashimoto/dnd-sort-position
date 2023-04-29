@@ -1,8 +1,10 @@
 # dnd-sort-position
 
-[![npm](https://img.shields.io/npm/dw/dnd-sort-position)](https://www.npmjs.com/package/dnd-sort-position)
+[![npm](https://img.shields.io/npm/v/dnd-sort-position?style=flat&logo=npm)](https://www.npmjs.com/package/dnd-sort-position)
+[![npm](https://img.shields.io/npm/dw/dnd-sort-position?style=flat&logo=npm)](https://www.npmjs.com/package/dnd-sort-position)
+[![npm](https://img.shields.io/bundlephobia/min/dnd-sort-position?style=flat)](https://www.npmjs.com/package/dnd-sort-position)
 
-Get and maintain sort positions for manually sorted lists
+Get and maintain sort positions for manually sorted lists.
 
 ```typescript
 import { positionBetween } from "dnd-sort-position";
@@ -57,7 +59,13 @@ One potential solution is to save the sort position as doubles instead, which ca
 
 Alternatively, you could save the sort position as strings, which would allow you to save a position for each element and update only one element per update, thus avoiding conflicts. You'd want the strings to produce the shortest strings possible and works with most default `sort` algorithms, which is the purpose of this library.
 
+### What about concurrent updates that collide?
+
+For example, if two different elements were put between elements A & B simultaneously, wouldn't that produce the same position? Yes, but that's not an issue with this library but with concurrent updates in general. None of the solutions address this problem directly. You'd likely want a tie breaker, ie sort on `position, id`.
+
 ## API
+
+The [unit tests](https://github.com/saiichihashimoto/dnd-sort-position/blob/main/src/index.test.ts) are the best example of how this should be used.
 
 ### `positionBetween()`
 
