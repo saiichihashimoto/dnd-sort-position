@@ -102,9 +102,6 @@ describe("getPositionBetween", () => {
       positionBetween("pottx", "pottz", undefined, { blocked: /potty/ })
     ).toBe("pottxn"));
 
-  it("defaults blocked to `badwords`", () =>
-    expect(positionBetween("asr", "ast")).toBe("asrn"));
-
   it("avoids blocked when called recursively", () =>
     expect(
       positionBetween("test", "tesu", undefined, { blocked: ["testn"] })

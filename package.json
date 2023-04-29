@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "dnd-sort-position",
-  "description": "Get and maintain sort positions for manually sorted lists",
+  "description": "Get and maintain sort positions for manually sorted lists.",
   "homepage": "https://github.com/saiichihashimoto/dnd-sort-position#readme",
   "repository": "saiichihashimoto/dnd-sort-position",
   "main": "dist/index.js",
@@ -19,9 +19,6 @@
     "prepare:brew": "brew bundle",
     "prepare:husky": "husky install",
     "test": "jest"
-  },
-  "dependencies": {
-    "badwords": "1.0.0"
   },
   "devDependencies": {
     "@standard-configs/prettier-plugin": "1.0.7",
