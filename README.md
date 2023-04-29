@@ -1,7 +1,7 @@
 # dnd-sort-position
 
 [![NPM Downloads](https://img.shields.io/npm/dw/dnd-sort-position?style=flat&logo=npm)](https://www.npmjs.com/package/dnd-sort-position)
-![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/saiichihashimoto/dnd-sort-position/main?style=flat&logo=github)
+[![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/saiichihashimoto/dnd-sort-position?style=flat&logo=github)](https://github.com/saiichihashimoto/dnd-sort-position/pulls?q=is%3Apr+is%3Aclosed)
 [![GitHub Repo stars](https://img.shields.io/github/stars/saiichihashimoto/dnd-sort-position?style=flat&logo=github)](https://github.com/saiichihashimoto/dnd-sort-position/stargazers)
 [![GitHub contributors](https://img.shields.io/github/contributors/saiichihashimoto/dnd-sort-position?style=flat&logo=github)](https://github.com/saiichihashimoto/dnd-sort-position/graphs/contributors)
 [![Minified Size](https://img.shields.io/bundlephobia/min/dnd-sort-position?style=flat)](https://www.npmjs.com/package/dnd-sort-position?activeTab=code)
