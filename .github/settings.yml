@@ -2,7 +2,7 @@
 repository:
   name: dnd-sort-position
   description: Get and maintain sort positions for manually sorted lists.
-  homepage: https://github.com/saiichihashimoto/dnd-sort-position#readme
+  homepage: https://saiichihashimoto.github.io/dnd-sort-position/
   topics:
   private: false
   has_issues: true
