@@ -4,6 +4,11 @@
   "description": "Get and maintain sort positions for manually sorted lists",
   "homepage": "https://github.com/saiichihashimoto/dnd-sort-position#readme",
   "repository": "saiichihashimoto/dnd-sort-position",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "concurrently --prefix-colors \"auto\" npm:dev:*",
