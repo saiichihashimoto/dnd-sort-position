@@ -92,7 +92,7 @@ function positionBetween(
       | RegExp
       | string[]
       | ((value: string) => boolean)
-      | { [key: string]: unknown } = require("badwords/object"),
+      | { [key: string]: unknown },
     inclusiveOfOne?: boolean = typeof interpolationFactor === "number",
   }
 ) => string;
