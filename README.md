@@ -7,6 +7,8 @@
 [![Minified Size](https://img.shields.io/bundlephobia/min/dnd-sort-position?style=flat)](https://www.npmjs.com/package/dnd-sort-position?activeTab=code)
 [![License](https://img.shields.io/github/license/saiichihashimoto/dnd-sort-position?style=flat)](https://github.com/saiichihashimoto/dnd-sort-position/blob/main/LICENSE)
 
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/saiichihashimoto?style=flat)](https://github.com/sponsors/saiichihashimoto)
+
 Get and maintain sort positions for manually sorted lists.
 
 ## Install
