@@ -4,6 +4,10 @@
   "description": "Get and maintain sort positions for manually sorted lists.",
   "homepage": "https://saiichihashimoto.github.io/dnd-sort-position/",
   "repository": "saiichihashimoto/dnd-sort-position",
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/saiichihashimoto"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": ["dist"],
