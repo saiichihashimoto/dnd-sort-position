@@ -23,7 +23,7 @@
     "test": "jest --color"
   },
   "devDependencies": {
-    "@standard-configs/prettier-plugin": "1.0.11",
+    "@standard-configs/prettier-plugin": "1.0.12",
     "@total-typescript/ts-reset": "0.4.2",
     "@trivago/prettier-plugin-sort-imports": "4.1.1",
     "@types/badwords": "1.0.3",
