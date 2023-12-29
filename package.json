@@ -28,7 +28,7 @@
     "@trivago/prettier-plugin-sort-imports": "4.1.1",
     "@types/badwords": "1.0.3",
     "@types/jest": "29.5.3",
-    "@types/lint-staged": "13.2.0",
+    "@types/lint-staged": "13.3.0",
     "@typescript-eslint/eslint-plugin": "6.16.0",
     "concurrently": "8.2.2",
     "cross-env": "7.0.3",
