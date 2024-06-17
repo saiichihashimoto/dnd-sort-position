@@ -1,4 +1,6 @@
-# dnd-sort-position
+# dnd-sort-position [DEPRECATED]
+
+# ⛔️ THIS IS THE SAME SOLUTION AS [`fractional-indexing`](https://www.npmjs.com/package/fractional-indexing)
 
 [![NPM Downloads](https://img.shields.io/npm/dw/dnd-sort-position?style=flat&logo=npm)](https://www.npmjs.com/package/dnd-sort-position)
 [![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/saiichihashimoto/dnd-sort-position?style=flat&logo=github)](https://github.com/saiichihashimoto/dnd-sort-position/pulls?q=is%3Apr+is%3Aclosed)
